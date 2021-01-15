@@ -1,0 +1,23 @@
+Day 1 -- 1/14/21 
+- Done
+    - Set up stuff for Manthan 
+        - Node.js, webpack, three, vs code, github (everything)
+        - Explained code and current situation 
+    - Deleted force functions 
+        - Decided on potential minimization rather than force minimization
+- What's Left
+    - Graphics 
+        - Movement controls need to be fixed
+        <<<<- Preference to orbit-like controls
+        - Maybe see if things can be cleaner
+<<<<- Science stuff
+        - Research the potential stuff for each of the fundamental forces (not gravity, too weak)
+        - Think about what to do for forces without superposition
+        - Think about different situations with equal potential (potential wells)
+        - Think about if particles are moving in nucleus
+            - Maybe this is why people don't do this project? 
+    - Recursive Algorithm 
+        - Shouldn't be extremely complicated
+            - Go via route of minimax sort of (DFS type route)
+            - Alpha-Beta pruning and then some other optimization 
+    <<<<- Needs to be developed still though

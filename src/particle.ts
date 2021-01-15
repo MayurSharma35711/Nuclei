@@ -35,8 +35,8 @@ export class Particle {
     this.dispY = this.y * Particle.DISP_SCALE;
     this.dispZ = this.z * Particle.DISP_SCALE;
     this.type = type;
-    if (this.type === ParticleType.NEUTRON) this.chargeEM = 1;
-    else if (this.type === ParticleType.PROTON) this.chargeEM = 0;
+    if (this.type === ParticleType.NEUTRON) this.chargeEM = 0;
+    else if (this.type === ParticleType.PROTON) this.chargeEM = 1;
     this.createParticle(this.type);
   }
   private createParticle(type: ParticleType) {

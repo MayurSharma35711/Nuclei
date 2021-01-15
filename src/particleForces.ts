@@ -12,27 +12,35 @@ function getDistance (particle1: Particle, particle2: Particle): number {
     return Math.pow(dr2, 0.5);
 }
 
+// particle geometric things 
+
+function intersectCheck (particle1: Particle, particle2: Particle): boolean {
+  return getDistance(particle1, particle2) < 2 * Particle.RADIUS;
+}
+
+export function anyIntersections (particles: Particle[]): boolean {
+  let particle1 = particles[0];
+  for (let i = 1; i < particles.length; i++) {
+    if (intersectCheck(particle1, particles[i])) {
+      console.log(particle1); // for debugging purposes, might want to make a print function for particles
+      console.log(particles[i]);
+      console.log(getDistance(particle1, particles[i]));
+      return true;
+    }
+  }
+  if (particles.length > 2) {
+    return anyIntersections(particles.slice(1));
+  }
+  return false;
+}
+
 // particle physics functions
 // Ideas: perhaps instead of pairwise calculations, we could calculate via fields?
-
-function EMForce (particle1: Particle, particle2: Particle): number {
-  let dr = getDistance(particle1, particle2);
-  return particle1.chargeEM * particle2.chargeEM/(dr*dr); // this formula is tentative 
-  // look into exact definition used for this function and do some math to fix it up 
-}
 
 function EMPotential (particle1: Particle, particle2: Particle): number {
   let dr = getDistance(particle1, particle2);
   return 1/(dr); // this formula is tentative
   // what exact potential are you looking for? Based on that, this needs to be changed
-}
-
-function StrongForce (particle1: Particle, particle2: Particle): number {
-  let dr = getDistance(particle1, particle2);
-  let pionMass = 132.5; // MeV 
-  return Math.pow(Math.E, -pionMass*dr)/(dr*dr); // this formula is tentative
-  // do some more research to get any sort of actual force. The value above is not even a force,
-  // I believe it is actually the Yukawa potential which only holds for quarkonium
 }
 
 function StrongPotential (particle1: Particle, particle2: Particle): number {
@@ -43,21 +51,12 @@ function StrongPotential (particle1: Particle, particle2: Particle): number {
   // do more research to find the actual formula
 }
 
-function WeakForce (particle1: Particle, particle2: Particle): number {
-  let dr = getDistance(particle1, particle2);
-  let WZmesonMass = 1000*(91+91+80)/3; // Average mass of W+, W-, Z 
-  return Math.pow(Math.E, -WZmesonMass*dr)/(dr*dr); // this formula is tentative
-  // This one should be (hopefully) better documented than that of the strong force
-  // Currently, this is a yukawa formula looking thing and not actually a force.
-}
-
 function WeakPotential (particle1: Particle, particle2: Particle): number {
   let dr = getDistance(particle1, particle2);
   let WZmesonMass = 1000*(91+91+80)/3; // Average mass of W+, W-, Z 
   return Math.pow(Math.E, -WZmesonMass*dr)/(dr*dr); // this formula is tentative
   // Not sure if this is the actual formula, so do some more research to find it
 }
-
 
 export class Field { 
   // not required that this is a class, but I thought it might be cleaner to understand? 
@@ -136,26 +135,4 @@ export class Field {
     }
     return potential;
   }
-}
-
-// particle geometric things 
-
-function intersectCheck (particle1: Particle, particle2: Particle): boolean {
-  return getDistance(particle1, particle2) < 2 * Particle.RADIUS;
-}
-
-export function anyIntersections (particles: Particle[]): boolean {
-  let particle1 = particles[0];
-  for (let i = 1; i < particles.length; i++) {
-    if (intersectCheck(particle1, particles[i])) {
-      console.log(particle1); // for debugging purposes, might want to make a print function for particles
-      console.log(particles[i]);
-      console.log(getDistance(particle1, particles[i]));
-      return true;
-    }
-  }
-  if (particles.length > 2) {
-    return anyIntersections(particles.slice(1));
-  }
-  return false;
 }
